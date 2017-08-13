@@ -1,0 +1,37 @@
+version: '3'
+services:
+  web:
+    image: jazriel/whataclass:second
+    ports:
+     - "80:80"
+    networks:
+     - backend
+    depends_on:
+     - database
+     # postgresql://[user[:password]@][netloc][:port][/dbname]
+     # defaults ://postgres@database:5432/postgres <- username
+    environment:
+     - DATABASE_URL=postgresql://postgres@database:5432/postgres
+     - WORKER_HOST_NAME=worker
+     - WORKER_PORT=22
+     - WORKER_USER=root
+     - WORKER_PASSWORD=screencast
+     - TENSORFLOW=True
+    volumes:
+     - images:/app/static/images
+ 
+  database:
+    image: "postgres"
+    networks:
+     - backend
+  worker:
+    image: jazriel/sshed-tf:firstcommit
+    networks:
+     - backend
+    volumes:
+     - images:/images
+networks:
+  backend:
+volumes:
+  # Named volume
+  images:

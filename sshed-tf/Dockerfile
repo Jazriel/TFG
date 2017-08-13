@@ -3,10 +3,10 @@ FROM gcr.io/tensorflow/tensorflow:latest-devel-py3
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
 COPY ./id_rsa.pub .
 RUN mkdir -p ~/.ssh && cat id_rsa.pub >> ~/.ssh/authorized_keys
-
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # Directory for images
 
