@@ -15,9 +15,8 @@ def create_graph(model_path):
 def run_inference_on_image(image_path='/images/panda.jpg',
                            model_path='/graphs/inceptionv3_model.pb',
                            labels_path='/graphs/inceptionv3_labels.txt',
-                           model_to_labels_path=None,
-                           tensor='softmax:0'):
-    
+                           tensor='softmax:0',
+                           model_to_labels_path=None):
     answer = None
     for file in (image_path, model_path, labels_path):
         if not tf.gfile.Exists(file):
@@ -28,7 +27,7 @@ def run_inference_on_image(image_path='/images/panda.jpg',
 
     # Creates graph from saved GraphDef.
     # Don't need to save the graph tf does it behind the scenes.
-    
+
     create_graph(model_path)
 
     with tf.Session() as sess:
@@ -52,14 +51,18 @@ def run_inference_on_image(image_path='/images/panda.jpg',
         else:
             for i in range(len(labels_lines)):
                 labels[i] = labels_lines[i].decode()
-
-        for i in range(3):
-            answer = labels[top_k[i]]
-            score = predictions[top_k[i]]
-            print(answer, end=':')
-            print(score, end=';')
+        try:
+            for i in range(3):
+                answer = labels[top_k[i]]
+                score = predictions[top_k[i]]
+                print(answer, end=':')
+                print(score, end=';')
+        except:
+            # if there are just 2 classes
+            pass
 
         return labels[top_k[0]]
+
 
 
 def parse_labels_to_readable_labels(labels, lines, model_to_labels_path):
@@ -83,10 +86,10 @@ def parse_labels_to_readable_labels(labels, lines, model_to_labels_path):
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         run_inference_on_image(image_path=sys.argv[1])
-    if len(sys.argv) == 4:
+    elif len(sys.argv) == 4:
         run_inference_on_image(sys.argv[1], sys.argv[2], sys.argv[3])
-    if len(sys.argv) == 5:
+    elif len(sys.argv) == 5:
         run_inference_on_image(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    if len(sys.argv) == 5:
-        run_inference_on_image(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], tensor=sys.argv[5])
+    elif len(sys.argv) == 6:
+        run_inference_on_image(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
 

@@ -10,10 +10,12 @@ RUN mkdir -p ~/.ssh && cat id_rsa.pub >> ~/.ssh/authorized_keys
 
 # Directory for images
 
-RUN mkdir -p /images && mkdir -p /datasets && mkdir -p /scripts && mkdir -p /graphs
+RUN mkdir -p /images && mkdir -p /dataset && mkdir -p /scripts && mkdir -p /graphs
 
 COPY ./scripts /scripts/
 COPY ./graphs /graphs/
+
+ENV PYTHONPATH "$PYTHONPATH:/scripts:/"
 
 # SSH login fix. Otherwise user is kicked off after login (Docker doc)
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
