@@ -25,7 +25,7 @@ services:
     networks:
      - backend
   worker:
-    image: jazriel/sshed-tf:firstcommit
+    image: jazriel/sshed-tf:turnin
     networks:
      - backend
     volumes:
