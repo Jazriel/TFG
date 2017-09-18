@@ -1,7 +1,7 @@
 version: '3.0'
 services:
   web:
-    image: jazriel/whataclass:second
+    image: jazriel/whataclass:turnin
     ports:
      - "80:80"
     networks:
