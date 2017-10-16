@@ -4,7 +4,7 @@ Repository in which the sshed-tf microservice is stored, also has files ease the
 
 Other repositories related to this one are:
 
- - [WhatAClass](https://github.com/Jazriel/WhatAClass)
+ - [WhatAClass](https://github.com/Jazriel/WhatAClass): The other microservice that is part of this project. 
  - [Auth-That](https://github.com/Jazriel/auth-that)
  - [SeshatAuth](https://github.com/cgosorio/SeshatAuth): [hosted here.](http://seshat-auth.herokuapp.com)
 
